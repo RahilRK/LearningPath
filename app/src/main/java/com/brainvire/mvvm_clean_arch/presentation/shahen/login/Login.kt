@@ -63,6 +63,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.brainvire.learning.R
+import com.brainvire.mvvm_clean_arch.common.toSafeInt
 import com.brainvire.mvvm_clean_arch.presentation.shahen.component.LoadingDialog
 import com.brainvire.mvvm_clean_arch.presentation.shahen.component.SnakeBar
 import com.brainvire.mvvm_clean_arch.presentation.shahen.login.state.LoginState
@@ -78,6 +79,7 @@ fun Login() {
     val TAG = "Login"
 
     val viewModel: LoginViewModel = hiltViewModel()
+    val preferenceManager = viewModel.preferenceManager
     val context = LocalContext.current
     val scaffoldState: ScaffoldState = rememberScaffoldState()
 
@@ -91,8 +93,13 @@ fun Login() {
         Log.d(TAG, "Login: error: ${loginState.error}")
 //        SnakeBar(scaffoldState = scaffoldState, message = loginState.error)
     } else {
-        Log.d(TAG, "Login: data: ${loginState.data}")
-//        Toast.makeText(context, loginState.data?.message, Toast.LENGTH_SHORT).show()
+        Log.d(TAG, "Login: success: ${loginState.data}")
+        val loginResponse = loginState.data?.data
+        preferenceManager.setLogin(true)
+        preferenceManager.setUserId(loginResponse?.user?.id.toSafeInt())
+        preferenceManager.setProviderId(loginResponse?.user?.serviceProvider?.id.toSafeInt())
+        preferenceManager.setAccessToken(loginResponse?.accessToken.orEmpty())
+        preferenceManager.setDeviceToken(loginResponse?.user?.deviceToken.orEmpty())
     }
 
     Scaffold(scaffoldState = scaffoldState) {

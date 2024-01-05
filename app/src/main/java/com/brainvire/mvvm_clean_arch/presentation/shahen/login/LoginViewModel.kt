@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.brainvire.mvvm_clean_arch.common.isEmailValid
 import com.brainvire.mvvm_clean_arch.common.isPasswordValid
 import com.brainvire.mvvm_clean_arch.common.orFalse
+import com.brainvire.mvvm_clean_arch.data.local.PreferenceManager
 import com.brainvire.mvvm_clean_arch.data.model.request.ReqLogin
 import com.brainvire.mvvm_clean_arch.data.model.response.Resource
 import com.brainvire.mvvm_clean_arch.domain.usecase.LoginUseCase
@@ -27,6 +28,7 @@ import javax.inject.Inject
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val loginUseCase: LoginUseCase,
+    val preferenceManager: PreferenceManager
 ) : ViewModel() {
 
     var TAG = "LoginViewModel"

@@ -29,38 +29,46 @@
         <activity
             android:name="com.brainvire.mvvm_clean_arch.presentation.HomeActivity"
             android:exported="true">
+<!--
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+-->
         </activity>
         <activity
             android:name=".FlowActivity"
             android:exported="true">
+<!--
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+-->
         </activity>
         <activity
             android:name=".CoroutineActivity"
             android:exported="true">
+<!--
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+-->
         </activity>
         <activity
             android:name=".MainActivity"
             android:exported="true">
+<!--
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+-->
         </activity>
     </application>
 

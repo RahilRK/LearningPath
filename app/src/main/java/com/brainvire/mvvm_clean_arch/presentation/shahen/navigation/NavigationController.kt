@@ -16,6 +16,7 @@ import com.brainvire.mvvm_clean_arch.util.Constants.ORDER_HISTORY_ROUTE
 
 @Composable
 fun NavigationController(
+    startDestination: String = LOGIN_ROUTE,
     navController: NavHostController,
     paddingValues: PaddingValues,
     hideBottomNav: Boolean = false,

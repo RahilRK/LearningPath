@@ -16,17 +16,22 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.brainvire.mvvm_clean_arch.data.local.PreferenceManager
+import com.brainvire.mvvm_clean_arch.presentation.shahen.login.LoginViewModel
 import com.brainvire.mvvm_clean_arch.presentation.shahen.ui.theme.bottom_tab_unselected
 import com.brainvire.mvvm_clean_arch.presentation.shahen.ui.theme.shahen_app_color
 import com.brainvire.mvvm_clean_arch.util.Constants
 import com.brainvire.mvvm_clean_arch.util.Constants.DASHBOARD_ROUTE
+import com.brainvire.mvvm_clean_arch.util.Constants.LOGIN_ROUTE
 import com.brainvire.mvvm_clean_arch.util.Constants.shahenCurrentScreen
 
 @Composable
-fun ShahenBottomNavigation(preferenceManager: PreferenceManager) {
+fun ShahenBottomNavigation() {
+
+    val viewModel: LoginViewModel = hiltViewModel()
+    val preferenceManager = viewModel.preferenceManager
 
     val navController = rememberNavController()
     val currentNavBackStackEntry by navController.currentBackStackEntryAsState()
@@ -112,6 +117,7 @@ fun ShahenBottomNavigation(preferenceManager: PreferenceManager) {
         }
     ) { it ->
         NavigationController(
+            startDestination = if(preferenceManager.isLogin()) DASHBOARD_ROUTE else LOGIN_ROUTE,
             navController = navController,
             it,
             hideBottomNav = bottomBarState.value,
