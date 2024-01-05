@@ -1,0 +1,12 @@
+package com.shahen.provider.core.models.responses.login
+
+import com.google.gson.annotations.SerializedName
+
+data class RespLogin(
+    @SerializedName("access_token")
+    val accessToken: String? = "", // eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIzIiwianRpIjoiZGFkZGZkZGNhOGUyMzdlMjllYTlkY2JhMWM4ODlmMDc3Yjk4M2Y2OTllZWJhZTA3NDRkYjM2ZTczNzlmYmYzMjNjYzgyMWFkY2E5Njg3NDQiLCJpYXQiOjE2ODgxMDc5NDksIm5iZiI6MTY4ODEwNzk0OSwiZXhwIjoxNzE5NzMwMzQ5LCJzdWIiOiIxNSIsInNjb3BlcyI6W119.tQC1NdJXnyUxg_02IFjPo0y7jQYCB-kWhTrJ4n6IjHJYmdEAJdqHqxBWQmYREo-eyYMeWoH8nyD9xGI4X5ef8bw3_NnU0yK05D90iGfa1SAXa9nTSq7Whu-AEI9VXaDZKcaS9I_Vty8Ln2KQB3craw4z4svYqXUzF5rKAD8wZMtuR_z2QbKmKN_4cjlPkaYWuI8aadMgtv-W6E82RuX-dT3zC4K2QaqatjWYarn9rMVMFKq-9GCe_Ow_gmHzoE5xjbs8-7P4jLUNEQNCGf1HxsnW6eHoLaARG0HFX0b5-6m9KZytGFslIe__qsEAFlaFIR1bw-McdPPbhOyP07H28iA9lf0hOMRUUNkwLNP26C-G5FNpC8MR4dpyHF29SESolEhEASrAdzPf3n2luLqNW5AcMveqjnNQuxUk5YLNCid8hI4n39yxHVDp8miauKXQ1fHid7sHDzBxmCrd0NsSwgoCNuwrqujQY-IkAheBwZwIwDhcMmpifbKcQqreST1yEEsr5qhzpA5Hpi8raHvhXPWDY-VC7Ij_hkV77K7WZPHI5hbYxDPvzsObKag3jAhyI6STmPIdbVgtvgDQ-LnmSfSHmXJu67EPDSqwLIYuqeKaHJCKdKvfRFSqxnIJ0BvLMhzfPh6jMXlH9QpBq3SOljHfsn4y4JJ8qwVNYNxQZcQ
+    @SerializedName("role")
+    val role: String? = "", // service_provider
+    @SerializedName("user")
+    val user: User? = User()
+)

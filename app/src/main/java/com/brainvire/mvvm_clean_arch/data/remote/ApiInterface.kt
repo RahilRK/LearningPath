@@ -1,9 +1,15 @@
 package com.brainvire.mvvm_clean_arch.data.remote
 
 import com.brainvire.mvvm_clean_arch.data.model.CategoryListRespDTO
+import com.brainvire.mvvm_clean_arch.data.model.request.ReqLogin
+import com.brainvire.mvvm_clean_arch.data.model.response.AppResponse
+import com.brainvire.mvvm_clean_arch.presentation.URLFactory.EP_Login
+import com.shahen.provider.core.models.responses.login.RespLogin
 import kotlinx.coroutines.flow.Flow
 import retrofit2.Response
+import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.POST
 
 interface ApiInterface {
 
@@ -44,4 +50,8 @@ interface ApiInterface {
     suspend fun getMealDetail(
         @Query("i") id: String = "i",
     ): Response<MealDetail>*/
+
+    @POST(EP_Login)
+    suspend fun login(@Body model: ReqLogin): AppResponse<RespLogin>
+
 }
