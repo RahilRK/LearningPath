@@ -1,9 +1,12 @@
 package com.brainvire.mvvm_clean_arch.data.remote
 
 import com.brainvire.mvvm_clean_arch.data.model.CategoryListRespDTO
+import com.brainvire.mvvm_clean_arch.data.model.request.ReqDirectOrderDashboard
 import com.brainvire.mvvm_clean_arch.data.model.request.ReqLogin
 import com.brainvire.mvvm_clean_arch.data.model.response.AppResponse
+import com.brainvire.mvvm_clean_arch.data.model.response.direct_order.dashboard.Data
 import com.brainvire.mvvm_clean_arch.data.model.response.my_profile.RespMyProfile
+import com.brainvire.mvvm_clean_arch.util.URLFactory.EP_DIRECT_ORDER_DASHBOARD
 import com.brainvire.mvvm_clean_arch.util.URLFactory.EP_Login
 import com.brainvire.mvvm_clean_arch.util.URLFactory.EP_USER_PROFILE
 import com.brainvire.mvvm_clean_arch.util.URLFactory.UNREAD_NOTIFICATION
@@ -62,4 +65,6 @@ interface ApiInterface {
     @GET(UNREAD_NOTIFICATION)
     suspend fun unreadNotificationCount(): AppResponse<Any>
 
+    @POST(EP_DIRECT_ORDER_DASHBOARD)
+    suspend fun directOrderDashboard(@Body model: ReqDirectOrderDashboard): AppResponse<List<Data>>
 }

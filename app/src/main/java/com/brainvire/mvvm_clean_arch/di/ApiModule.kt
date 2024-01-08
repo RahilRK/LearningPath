@@ -7,10 +7,12 @@ import android.os.Build
 import com.brainvire.mvvm_clean_arch.data.local.PrefConstant.PREF_NAME
 import com.brainvire.mvvm_clean_arch.data.local.PreferenceManager
 import com.brainvire.mvvm_clean_arch.data.remote.ApiInterface
+import com.brainvire.mvvm_clean_arch.data.repository_impl.DirectOrderRepImplement
 import com.brainvire.mvvm_clean_arch.data.repository_impl.LoginRepImplement
 import com.brainvire.mvvm_clean_arch.data.repository_impl.MyProfileRepImplement
 import com.brainvire.mvvm_clean_arch.data.repository_impl.NotificationRepImplement
 import com.brainvire.mvvm_clean_arch.data.repository_impl.RepositoryImpl
+import com.brainvire.mvvm_clean_arch.domain.repository.DirectOrderRepository
 import com.brainvire.mvvm_clean_arch.domain.repository.LoginRepository
 import com.brainvire.mvvm_clean_arch.domain.repository.MyProfileRepository
 import com.brainvire.mvvm_clean_arch.domain.repository.NotificationRepository
@@ -176,6 +178,7 @@ object ApiModule {
     ): MyProfileRepository {
         return MyProfileRepImplement(apiInterface, preferenceManager, gson)
     }
+
     @Provides
     fun provideNotificationRepository(
         apiInterface: ApiInterface,
@@ -185,4 +188,12 @@ object ApiModule {
         return NotificationRepImplement(apiInterface, gson)
     }
 
+    @Provides
+    fun provideOrderHistoryDashboardRepository(
+        apiInterface: ApiInterface,
+        preferenceManager: PreferenceManager,
+        gson: Gson
+    ): DirectOrderRepository {
+        return DirectOrderRepImplement(apiInterface, preferenceManager, gson)
+    }
 }

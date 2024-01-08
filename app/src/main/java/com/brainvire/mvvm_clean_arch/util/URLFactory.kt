@@ -26,4 +26,5 @@ object URLFactory {
     const val EP_Login = "login"
     const val EP_USER_PROFILE = "me"
     const val UNREAD_NOTIFICATION = "/api/notifications/unread"
+    const val EP_DIRECT_ORDER_DASHBOARD = "provider/order/history/count"
 }

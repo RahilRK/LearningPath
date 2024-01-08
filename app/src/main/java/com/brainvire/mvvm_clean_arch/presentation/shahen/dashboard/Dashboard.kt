@@ -29,7 +29,6 @@ fun Dashboard() {
         if (isLoadingState) {
             LoadingDialog()
         }
-
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -41,7 +40,7 @@ fun Dashboard() {
             Column(Modifier.padding(8.dp)) {
 
                 Header(
-//                viewModel
+                    viewModel
                 )
                 DashboardGridOrdersList()
             }
