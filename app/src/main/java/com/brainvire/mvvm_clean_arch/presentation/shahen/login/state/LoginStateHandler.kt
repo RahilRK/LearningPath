@@ -6,6 +6,7 @@ import com.brainvire.mvvm_clean_arch.domain.model.Category
 import com.shahen.provider.core.models.responses.login.RespLogin
 
 data class LoginStateHandler(
+    val isLoading: Boolean = false,
     val data: AppResponse<RespLogin>? = null,
     val error: String = ""
 )

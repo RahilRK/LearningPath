@@ -8,10 +8,14 @@ import com.brainvire.mvvm_clean_arch.data.local.PrefConstant.PREF_NAME
 import com.brainvire.mvvm_clean_arch.data.local.PreferenceManager
 import com.brainvire.mvvm_clean_arch.data.remote.ApiInterface
 import com.brainvire.mvvm_clean_arch.data.repository_impl.LoginRepImplement
+import com.brainvire.mvvm_clean_arch.data.repository_impl.MyProfileRepImplement
+import com.brainvire.mvvm_clean_arch.data.repository_impl.NotificationRepImplement
 import com.brainvire.mvvm_clean_arch.data.repository_impl.RepositoryImpl
 import com.brainvire.mvvm_clean_arch.domain.repository.LoginRepository
+import com.brainvire.mvvm_clean_arch.domain.repository.MyProfileRepository
+import com.brainvire.mvvm_clean_arch.domain.repository.NotificationRepository
 import com.brainvire.mvvm_clean_arch.domain.repository.Repository
-import com.brainvire.mvvm_clean_arch.presentation.URLFactory
+import com.brainvire.mvvm_clean_arch.util.URLFactory
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
@@ -156,8 +160,29 @@ object ApiModule {
     }
 
     @Provides
-    fun provideLoginRepository(apiInterface: ApiInterface, preferenceManager: PreferenceManager,gson: Gson): LoginRepository {
+    fun provideLoginRepository(
+        apiInterface: ApiInterface,
+        preferenceManager: PreferenceManager,
+        gson: Gson
+    ): LoginRepository {
         return LoginRepImplement(apiInterface, gson)
+    }
+
+    @Provides
+    fun provideMyProfileRepository(
+        apiInterface: ApiInterface,
+        preferenceManager: PreferenceManager,
+        gson: Gson
+    ): MyProfileRepository {
+        return MyProfileRepImplement(apiInterface, preferenceManager, gson)
+    }
+    @Provides
+    fun provideNotificationRepository(
+        apiInterface: ApiInterface,
+        preferenceManager: PreferenceManager,
+        gson: Gson
+    ): NotificationRepository {
+        return NotificationRepImplement(apiInterface, gson)
     }
 
 }

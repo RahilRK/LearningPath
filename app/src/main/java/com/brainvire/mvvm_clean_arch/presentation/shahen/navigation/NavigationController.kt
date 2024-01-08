@@ -26,7 +26,7 @@ fun NavigationController(
 
     NavHost(
         navController = navController,
-        startDestination = DASHBOARD_ROUTE,
+        startDestination = startDestination,
     ) {
 
         composable(LOGIN_ROUTE) {

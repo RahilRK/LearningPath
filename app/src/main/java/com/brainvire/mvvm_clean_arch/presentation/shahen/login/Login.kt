@@ -1,17 +1,11 @@
 package com.brainvire.mvvm_clean_arch.presentation.shahen.login
 
 import android.util.Log
-import android.widget.Toast
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.interaction.InteractionSource
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -30,22 +24,15 @@ import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Scaffold
 import androidx.compose.material.ScaffoldState
 import androidx.compose.material.Text
-import androidx.compose.material.TextField
-import androidx.compose.material.TextFieldColors
 import androidx.compose.material.TextFieldDefaults
-import androidx.compose.material.TextFieldDefaults.indicatorLine
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Email
 import androidx.compose.material.icons.outlined.Lock
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.paint
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
@@ -65,11 +52,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.brainvire.learning.R
 import com.brainvire.mvvm_clean_arch.common.toSafeInt
 import com.brainvire.mvvm_clean_arch.presentation.shahen.component.LoadingDialog
-import com.brainvire.mvvm_clean_arch.presentation.shahen.component.SnakeBar
-import com.brainvire.mvvm_clean_arch.presentation.shahen.login.state.LoginState
 import com.brainvire.mvvm_clean_arch.presentation.shahen.ui.theme.edt_border_color
 import com.brainvire.mvvm_clean_arch.presentation.shahen.ui.theme.shahen_app_color
-import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterialApi::class)
 @Preview
@@ -89,11 +73,14 @@ fun Login() {
     val showPasswordState = viewModel.showPasswordState.collectAsState().value
     val loginState = viewModel.loginState.collectAsState().value
 
-    if (loginState.error.isNotEmpty()) {
-        Log.d(TAG, "Login: error: ${loginState.error}")
+    if(loginState.isLoading) {
+        Log.d(TAG, "loginState: isLoading:")
+    }
+    else if (loginState.error.isNotEmpty()) {
+        Log.e(TAG, "loginState: error: ${loginState.error}")
 //        SnakeBar(scaffoldState = scaffoldState, message = loginState.error)
     } else {
-        Log.d(TAG, "Login: success: ${loginState.data}")
+        Log.d(TAG, "loginState: success: ${loginState.data}")
         val loginResponse = loginState.data?.data
         preferenceManager.setLogin(true)
         preferenceManager.setUserId(loginResponse?.user?.id.toSafeInt())

@@ -59,7 +59,7 @@ class LoginViewModel @Inject constructor(
         _showPasswordState.value = value
     }
 
-    private val _loginState = MutableStateFlow(LoginStateHandler())
+    private val _loginState = MutableStateFlow(LoginStateHandler(isLoading = true))
     val loginState: StateFlow<LoginStateHandler> = _loginState
 
     private val _errorMsg = MutableStateFlow("")
@@ -99,11 +99,13 @@ class LoginViewModel @Inject constructor(
                 is Resource.Loading -> {
 
                     _isLoadingState.emit(true)
+                    _loginState.emit(LoginStateHandler(isLoading = true))
                 }
 
                 is Resource.Idle -> {
 
                     _isLoadingState.emit(false)
+                    _loginState.emit(LoginStateHandler(isLoading = true))
                 }
 
                 is Resource.Success -> {

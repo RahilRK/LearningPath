@@ -1,4 +1,4 @@
-package com.brainvire.mvvm_clean_arch.presentation
+package com.brainvire.mvvm_clean_arch.util
 
 import okhttp3.HttpUrl
 
@@ -24,4 +24,6 @@ object URLFactory {
     }
 
     const val EP_Login = "login"
+    const val EP_USER_PROFILE = "me"
+    const val UNREAD_NOTIFICATION = "/api/notifications/unread"
 }
