@@ -23,12 +23,8 @@ fun OrderHistory() {
     val TAG = "OrderHistory"
 
     val viewModel: OrderHistoryViewModel = hiltViewModel()
-    val isLoadingState = viewModel.isLoadingState.collectAsState().value
 
     Box {
-        if (isLoadingState) {
-            LoadingDialog()
-        }
         Column(
             modifier = Modifier
                 .fillMaxSize()

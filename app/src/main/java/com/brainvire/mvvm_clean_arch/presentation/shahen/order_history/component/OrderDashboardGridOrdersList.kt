@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.brainvire.mvvm_clean_arch.presentation.shahen.component.LoadingDialog
 import com.brainvire.mvvm_clean_arch.presentation.shahen.order_history.OrderHistoryViewModel
 import com.brainvire.mvvm_clean_arch.presentation.shahen.order_history.state.OrderHistoryState
 
@@ -30,6 +31,7 @@ fun OrderDashboardGridOrdersList(viewModel: OrderHistoryViewModel = hiltViewMode
     when (val result = orderHistoryDashboardState.value) {
         OrderHistoryState.Loading -> {
             Log.d(TAG, "OrderHistoryState: Loading")
+            LoadingDialog()
         }
 
         is OrderHistoryState.Success -> {

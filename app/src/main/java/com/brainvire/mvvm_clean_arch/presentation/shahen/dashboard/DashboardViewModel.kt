@@ -32,10 +32,6 @@ class DashboardViewModel @Inject constructor(
 
     var TAG = "DashboardViewModel"
 
-    private val _isLoadingState = MutableStateFlow(false)
-    val isLoadingState: StateFlow<Boolean>
-        get() = _isLoadingState.asStateFlow()
-
     private val _myProfileState = MutableStateFlow(MyProfileStateHandler(isLoading = true))
     val myProfileState: StateFlow<MyProfileStateHandler> = _myProfileState
 
@@ -58,25 +54,21 @@ class DashboardViewModel @Inject constructor(
             when (result) {
                 is Resource.Loading -> {
 
-                    _isLoadingState.emit(true)
                     _myProfileState.emit(MyProfileStateHandler(isLoading = true))
                 }
 
                 is Resource.Idle -> {
 
-                    _isLoadingState.emit(false)
                     _myProfileState.emit(MyProfileStateHandler(isLoading = true))
                 }
 
                 is Resource.Success -> {
 
-                    _isLoadingState.emit(false)
                     _myProfileState.emit(result.data?.let { MyProfileStateHandler(data = it) }!!)
                 }
 
                 is Resource.Error<*> -> {
 
-                    _isLoadingState.emit(false)
                     _myProfileState.emit(
                         MyProfileStateHandler(
                             error = result.message ?: "An unexpected error occurred"
@@ -119,19 +111,16 @@ class DashboardViewModel @Inject constructor(
             when (result) {
                 is Resource.Loading -> {
 
-                    _isLoadingState.emit(true)
                     _unreadNotificationState.emit(UnreadNotificationStateHandler(isLoading = true))
                 }
 
                 is Resource.Idle -> {
 
-                    _isLoadingState.emit(false)
                     _unreadNotificationState.emit(UnreadNotificationStateHandler(isLoading = true))
                 }
 
                 is Resource.Success -> {
 
-                    _isLoadingState.emit(false)
                     _unreadNotificationState.emit(result.data?.let {
                         _notificationCount.emit(it.data as Double)
                         UnreadNotificationStateHandler(
@@ -142,7 +131,6 @@ class DashboardViewModel @Inject constructor(
 
                 is Resource.Error<*> -> {
 
-                    _isLoadingState.emit(false)
                     _unreadNotificationState.emit(
                         UnreadNotificationStateHandler(
                             error = result.message ?: "An unexpected error occurred"

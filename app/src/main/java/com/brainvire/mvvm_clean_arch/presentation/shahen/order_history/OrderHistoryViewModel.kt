@@ -35,10 +35,6 @@ class OrderHistoryViewModel @Inject constructor(
 
     var TAG = "OrderHistoryViewModel"
 
-    private val _isLoadingState = MutableStateFlow(false)
-    val isLoadingState: StateFlow<Boolean>
-        get() = _isLoadingState.asStateFlow()
-
     private val _orderHistoryDashboardState =
         MutableStateFlow<OrderHistoryState>(OrderHistoryState.Loading)
     val orderHistoryDashboardState: StateFlow<OrderHistoryState>
@@ -53,19 +49,16 @@ class OrderHistoryViewModel @Inject constructor(
             when (result) {
                 is Resource.Loading -> {
 
-                    _isLoadingState.emit(true)
                     _orderHistoryDashboardState.emit(OrderHistoryState.Loading)
                 }
 
                 is Resource.Idle -> {
 
-                    _isLoadingState.emit(false)
                     _orderHistoryDashboardState.emit(OrderHistoryState.Loading)
                 }
 
                 is Resource.Success -> {
 
-                    _isLoadingState.emit(false)
                     val list = result.data?.data?.toMutableStateList()
                     if (list.isNullOrEmpty()) {
                         _orderHistoryDashboardState.emit(OrderHistoryState.Empty)
@@ -76,7 +69,6 @@ class OrderHistoryViewModel @Inject constructor(
 
                 is Resource.Error<*> -> {
 
-                    _isLoadingState.emit(false)
                     _orderHistoryDashboardState.emit(
                         OrderHistoryState.Error(
                             errorMsg = result.message ?: "An unexpected error occurred"
