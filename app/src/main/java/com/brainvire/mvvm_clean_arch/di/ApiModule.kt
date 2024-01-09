@@ -9,9 +9,11 @@ import com.brainvire.mvvm_clean_arch.data.local.PreferenceManager
 import com.brainvire.mvvm_clean_arch.data.remote.ApiInterface
 import com.brainvire.mvvm_clean_arch.data.repository_impl.DirectOrderRepImplement
 import com.brainvire.mvvm_clean_arch.data.repository_impl.LoginRepImplement
+import com.brainvire.mvvm_clean_arch.data.repository_impl.MainDashboardRepImpl
 import com.brainvire.mvvm_clean_arch.data.repository_impl.MyProfileRepImplement
 import com.brainvire.mvvm_clean_arch.data.repository_impl.NotificationRepImplement
 import com.brainvire.mvvm_clean_arch.data.repository_impl.RepositoryImpl
+import com.brainvire.mvvm_clean_arch.domain.repository.DashboardRepository
 import com.brainvire.mvvm_clean_arch.domain.repository.DirectOrderRepository
 import com.brainvire.mvvm_clean_arch.domain.repository.LoginRepository
 import com.brainvire.mvvm_clean_arch.domain.repository.MyProfileRepository
@@ -195,5 +197,13 @@ object ApiModule {
         gson: Gson
     ): DirectOrderRepository {
         return DirectOrderRepImplement(apiInterface, preferenceManager, gson)
+    }
+    @Provides
+    fun provideDashboardRepository(
+        apiInterface: ApiInterface,
+        preferenceManager: PreferenceManager,
+        gson: Gson
+    ): DashboardRepository {
+        return MainDashboardRepImpl(apiInterface, preferenceManager, gson)
     }
 }

@@ -15,10 +15,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.brainvire.learning.R
+import com.brainvire.mvvm_clean_arch.data.model.response.dashboard.CurrentOrder
+import com.brainvire.mvvm_clean_arch.data.model.response.dashboard.MainDashboardResponse
 import com.brainvire.mvvm_clean_arch.data.model.response.my_profile.RespMyProfile
 import com.brainvire.mvvm_clean_arch.presentation.shahen.component.LoadingDialog
 import com.brainvire.mvvm_clean_arch.presentation.shahen.dashboard.component.DashboardGridOrdersList
+import com.brainvire.mvvm_clean_arch.presentation.shahen.dashboard.component.DashboardNewOrderList
 import com.brainvire.mvvm_clean_arch.presentation.shahen.dashboard.component.Header
+import com.brainvire.mvvm_clean_arch.presentation.shahen.dashboard.component.NewOrderCount
 
 @Preview(showSystemUi = true)
 @Composable
@@ -31,11 +35,10 @@ fun Dashboard() {
 
     val myProfileState = viewModel.myProfileState.collectAsState().value
     var myProfileResponse = RespMyProfile()
-    if(myProfileState.isLoading) {
+    if (myProfileState.isLoading) {
         Log.d(TAG, "myProfileState: isLoading")
         LoadingDialog()
-    }
-    else if (myProfileState.error.isNotEmpty()) {
+    } else if (myProfileState.error.isNotEmpty()) {
         Log.e(TAG, "myProfileState: error: ${myProfileState.error}")
     } else {
         Log.d(TAG, "myProfileState: success: ${myProfileState.data}")
@@ -48,15 +51,28 @@ fun Dashboard() {
     val notificationCount = viewModel.notificationCount.collectAsState().value
     var unreadNotification = 0.0
 
-    if(unreadNotificationState.isLoading) {
+    if (unreadNotificationState.isLoading) {
         Log.d(TAG, "unreadNotificationState: isLoading")
         LoadingDialog()
-    }
-    else if (unreadNotificationState.error.isNotEmpty()) {
+    } else if (unreadNotificationState.error.isNotEmpty()) {
         Log.e(TAG, "unreadNotificationState: error: ${unreadNotificationState.error}")
     } else {
         Log.d(TAG, "unreadNotificationState: success: ${unreadNotificationState.data}")
         unreadNotification = notificationCount
+    }
+
+    val dashboardState = viewModel.dashboardState.collectAsState().value
+    var mainDashboardResponse = MainDashboardResponse()
+    if (dashboardState.isLoading) {
+        Log.d(TAG, "dashboardState: isLoading")
+        LoadingDialog()
+    } else if (dashboardState.error.isNotEmpty()) {
+        Log.e(TAG, "dashboardState: error: ${dashboardState.error}")
+    } else {
+        Log.d(TAG, "dashboardState: success: ${dashboardState.data}")
+        dashboardState.data?.data?.let {
+            mainDashboardResponse = it
+        }
     }
 
     Box {
@@ -76,7 +92,17 @@ fun Dashboard() {
                         unreadNotification = unreadNotification
                     )
                 }
+
                 DashboardGridOrdersList()
+
+                mainDashboardResponse.newOrderCount?.let {
+                    if (it > 0) {
+                        NewOrderCount(count = it)
+
+                        DashboardNewOrderList(list = viewModel.newOrderList)
+                    }
+                }
+
             }
         }
     }

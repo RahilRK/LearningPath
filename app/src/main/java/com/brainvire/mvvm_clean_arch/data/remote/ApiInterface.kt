@@ -4,8 +4,10 @@ import com.brainvire.mvvm_clean_arch.data.model.CategoryListRespDTO
 import com.brainvire.mvvm_clean_arch.data.model.request.ReqDirectOrderDashboard
 import com.brainvire.mvvm_clean_arch.data.model.request.ReqLogin
 import com.brainvire.mvvm_clean_arch.data.model.response.AppResponse
+import com.brainvire.mvvm_clean_arch.data.model.response.dashboard.MainDashboardResponse
 import com.brainvire.mvvm_clean_arch.data.model.response.direct_order.dashboard.Data
 import com.brainvire.mvvm_clean_arch.data.model.response.my_profile.RespMyProfile
+import com.brainvire.mvvm_clean_arch.util.URLFactory.EP_DASHBOARD_DATA
 import com.brainvire.mvvm_clean_arch.util.URLFactory.EP_DIRECT_ORDER_DASHBOARD
 import com.brainvire.mvvm_clean_arch.util.URLFactory.EP_Login
 import com.brainvire.mvvm_clean_arch.util.URLFactory.EP_USER_PROFILE
@@ -67,4 +69,7 @@ interface ApiInterface {
 
     @POST(EP_DIRECT_ORDER_DASHBOARD)
     suspend fun directOrderDashboard(@Body model: ReqDirectOrderDashboard): AppResponse<List<Data>>
+
+    @GET(EP_DASHBOARD_DATA)
+    suspend fun getMainDashboardData(): AppResponse<MainDashboardResponse>
 }

@@ -1,19 +1,19 @@
 package com.brainvire.mvvm_clean_arch.presentation.shahen.dashboard
 
-import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateOf
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.brainvire.mvvm_clean_arch.common.orFalse
 import com.brainvire.mvvm_clean_arch.data.local.PreferenceManager
-import com.brainvire.mvvm_clean_arch.data.model.request.ReqLogin
 import com.brainvire.mvvm_clean_arch.data.model.response.Resource
+import com.brainvire.mvvm_clean_arch.data.model.response.dashboard.CurrentOrder
 import com.brainvire.mvvm_clean_arch.domain.usecase.MyProfileUseCase
+import com.brainvire.mvvm_clean_arch.domain.usecase.dashboard.DashboardUseCase
 import com.brainvire.mvvm_clean_arch.domain.usecase.notification.GetUnreadNotificationUseCase
+import com.brainvire.mvvm_clean_arch.presentation.shahen.dashboard.state.DashboardStateHandler
 import com.brainvire.mvvm_clean_arch.presentation.shahen.dashboard.state.MyProfileStateHandler
 import com.brainvire.mvvm_clean_arch.presentation.shahen.dashboard.state.UnreadNotificationStateHandler
-import com.brainvire.mvvm_clean_arch.presentation.shahen.login.state.LoginStateHandler
-import com.brainvire.mvvm_clean_arch.presentation.shahen.login.state.TextFieldState
 import com.google.gson.JsonObject
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -23,10 +23,12 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
+
 @HiltViewModel
 class DashboardViewModel @Inject constructor(
     private val myProfileUseCase: MyProfileUseCase,
     private val getUnreadNotificationUseCase: GetUnreadNotificationUseCase,
+    private val dashboardUseCase: DashboardUseCase,
     val preferenceManager: PreferenceManager
 ) : ViewModel() {
 
@@ -40,13 +42,23 @@ class DashboardViewModel @Inject constructor(
     val unreadNotificationState: StateFlow<UnreadNotificationStateHandler> =
         _unreadNotificationState
 
+    private val _dashboardState =
+        MutableStateFlow(DashboardStateHandler(isLoading = true))
+    val dashboardState: StateFlow<DashboardStateHandler> =
+        _dashboardState
+
     private val _notificationCount = MutableStateFlow(0.0)
     val notificationCount: StateFlow<Double>
         get() = _notificationCount.asStateFlow()
 
+    private val _newOrderList = mutableStateListOf<CurrentOrder>()
+    val newOrderList
+        get() = _newOrderList
+
     init {
         myProfile()
         unreadNotification()
+        dashboardData()
     }
 
     private fun myProfile() {
@@ -159,6 +171,72 @@ class DashboardViewModel @Inject constructor(
 
                         _unreadNotificationState.emit(
                             UnreadNotificationStateHandler(
+                                error = error
+                            )
+                        )
+                    }
+                }
+            }
+        }.launchIn(viewModelScope)
+    }
+
+    private fun dashboardData() {
+        dashboardUseCase.invoke().onEach { result ->
+            when (result) {
+                is Resource.Loading -> {
+
+                    _dashboardState.emit(DashboardStateHandler(isLoading = true))
+                }
+
+                is Resource.Idle -> {
+
+                    _dashboardState.emit(DashboardStateHandler(isLoading = true))
+                }
+
+                is Resource.Success -> {
+
+                    _dashboardState.emit(result.data?.let {
+                        val newOrderList = result.data.data?.newOrder
+                        newOrderList?.let {
+                            val newOrdersCollection: Collection<CurrentOrder> = ArrayList<CurrentOrder>(it)
+                            _newOrderList.addAll(newOrdersCollection)
+                        }
+                        DashboardStateHandler(
+                            data = it
+                        )
+                    }!!)
+                }
+
+                is Resource.Error<*> -> {
+
+                    _dashboardState.emit(
+                        DashboardStateHandler(
+                            error = result.message ?: "An unexpected error occurred"
+                        )
+                    )
+
+                    val jsonObject = result.errorData as? JsonObject
+                    val jsonData = jsonObject?.entrySet()
+                    if (jsonData == null || jsonData.isEmpty().orFalse()) {
+                        _unreadNotificationState.emit(
+                            UnreadNotificationStateHandler(
+                                error = result.errorMessage!!
+                            )
+                        )
+                    } else {
+                        var error: String = ""
+                        jsonData.forEach { (_, value) ->
+                            if (value.isJsonArray) {
+                                value.asJsonArray.forEach { jsonElement ->
+                                    error += jsonElement.asString + " \n "
+                                }
+                            } else {
+                                error += value.asString + " \n "
+                            }
+                        }
+
+                        _dashboardState.emit(
+                            DashboardStateHandler(
                                 error = error
                             )
                         )
