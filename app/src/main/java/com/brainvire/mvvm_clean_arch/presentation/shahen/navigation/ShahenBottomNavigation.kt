@@ -47,10 +47,10 @@ fun ShahenBottomNavigation() {
 
     navController.addOnDestinationChangedListener { navController, destination, bundle ->
         destination.route?.let {
-            Log.d(
+            /*Log.d(
                 Constants.BottomNavigation,
                 "addOnDestinationChangedListener: $it"
-            )
+            )*/
 //            bottomBarState.value = !it.contains("meal_detail")
             shahenCurrentScreen = it
         }
