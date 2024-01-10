@@ -5,6 +5,9 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
@@ -15,14 +18,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.brainvire.learning.R
-import com.brainvire.mvvm_clean_arch.data.model.response.dashboard.CurrentOrder
 import com.brainvire.mvvm_clean_arch.data.model.response.dashboard.MainDashboardResponse
 import com.brainvire.mvvm_clean_arch.data.model.response.my_profile.RespMyProfile
 import com.brainvire.mvvm_clean_arch.presentation.shahen.component.LoadingDialog
+import com.brainvire.mvvm_clean_arch.presentation.shahen.dashboard.component.DashboardCurrentOrderList
 import com.brainvire.mvvm_clean_arch.presentation.shahen.dashboard.component.DashboardGridOrdersList
 import com.brainvire.mvvm_clean_arch.presentation.shahen.dashboard.component.DashboardNewOrderList
+import com.brainvire.mvvm_clean_arch.presentation.shahen.dashboard.component.DashboardOrderCount
 import com.brainvire.mvvm_clean_arch.presentation.shahen.dashboard.component.Header
-import com.brainvire.mvvm_clean_arch.presentation.shahen.dashboard.component.NewOrderCount
 
 @Preview(showSystemUi = true)
 @Composable
@@ -97,9 +100,16 @@ fun Dashboard() {
 
                 mainDashboardResponse.newOrderCount?.let {
                     if (it > 0) {
-                        NewOrderCount(count = it)
+                        DashboardOrderCount(orderType = "New", count = it)
 
                         DashboardNewOrderList(list = viewModel.newOrderList)
+                    }
+                }
+
+                mainDashboardResponse.newOrderCount?.let {
+                    if (it > 0) {
+                        DashboardOrderCount(orderType = "Current", count = it)
+                        DashboardCurrentOrderList(list = viewModel.newOrderList)
                     }
                 }
 
