@@ -1,13 +1,17 @@
 package com.brainvire.mvvm_clean_arch.presentation.shahen.dashboard
 
 import android.util.Log
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
@@ -32,7 +36,6 @@ import com.brainvire.mvvm_clean_arch.presentation.shahen.dashboard.component.Hea
 fun Dashboard() {
 
     val TAG = "Dashboard"
-
     val viewModel: DashboardViewModel = hiltViewModel()
 //    val isLoadingState = viewModel.isLoadingState.collectAsState().value
 
@@ -78,7 +81,9 @@ fun Dashboard() {
         }
     }
 
-    Box {
+    Box(
+        modifier = Modifier
+    ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -87,21 +92,23 @@ fun Dashboard() {
                     contentScale = ContentScale.Crop
                 ),
         ) {
-            Column(Modifier.padding(8.dp)) {
+            myProfileResponse.user?.let {
+                Header(
+                    user = it,
+                    unreadNotification = unreadNotification,
+                    modifier = Modifier.padding(start = 8.dp, end = 8.dp, top = 8.dp)
+                )
+            }
 
-                myProfileResponse.user?.let {
-                    Header(
-                        user = it,
-                        unreadNotification = unreadNotification
-                    )
-                }
-
+            Column(
+                modifier = Modifier
+                    .padding(8.dp)
+            ) {
                 DashboardGridOrdersList()
 
                 mainDashboardResponse.newOrderCount?.let {
                     if (it > 0) {
                         DashboardOrderCount(orderType = "New", count = it)
-
                         DashboardNewOrderList(list = viewModel.newOrderList)
                     }
                 }
@@ -112,7 +119,6 @@ fun Dashboard() {
                         DashboardCurrentOrderList(list = viewModel.newOrderList)
                     }
                 }
-
             }
         }
     }

@@ -1,6 +1,7 @@
 package com.brainvire.mvvm_clean_arch.presentation.shahen.component
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -29,6 +30,7 @@ import com.brainvire.mvvm_clean_arch.presentation.shahen.ui.theme.shahen_app_col
 @Preview
 @Composable
 fun TopBar(
+    onBackPress: () -> Unit = {},
     showBackArrow: Boolean = false,
     navigationIcon: ImageVector = Icons.Outlined.LocationOn,
     showTitle: Boolean = false,
@@ -42,7 +44,10 @@ fun TopBar(
                 Image(
                     modifier = Modifier
                         .align(Alignment.TopStart)
-                        .padding(12.dp),
+                        .padding(12.dp)
+                        .clickable {
+                            onBackPress()
+                        },
                     imageVector = Icons.Filled.ArrowBackIos,
                     contentDescription = null,
                     colorFilter = ColorFilter.tint(Color.White)
@@ -61,7 +66,7 @@ fun TopBar(
                 )
             }
 
-            if(showFilter) {
+            if (showFilter) {
                 Image(
                     modifier = Modifier
                         .align(Alignment.TopEnd)

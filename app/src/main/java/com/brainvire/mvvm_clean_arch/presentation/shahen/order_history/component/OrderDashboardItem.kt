@@ -1,5 +1,6 @@
 package com.brainvire.mvvm_clean_arch.presentation.shahen.order_history.component
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -25,8 +26,9 @@ import com.brainvire.mvvm_clean_arch.presentation.shahen.ui.theme.text_color
 @Preview(showSystemUi = false)
 @Composable
 fun OrderDashboardItem(
+    pos: Int = 0,
     model: Data = Data(count = 12, label = "New"),
-//    onItemClick: (model: DashboardOrders) -> Unit = {}
+    onItemClick: (index: Int, model: Data) -> Unit = { pos: Int, mModel: Data -> }
 ) {
 
     Card(
@@ -34,7 +36,10 @@ fun OrderDashboardItem(
         modifier = Modifier
             .padding(4.dp)
             .height(106.dp)
-            .width(164.dp),
+            .width(164.dp)
+            .clickable {
+                onItemClick(pos, model)
+            },
         shape = RoundedCornerShape(16.dp),
     ) {
 

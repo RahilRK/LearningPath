@@ -47,11 +47,12 @@ fun ShahenBottomNavigation() {
 
     navController.addOnDestinationChangedListener { navController, destination, bundle ->
         destination.route?.let {
-            /*Log.d(
+            Log.d(
                 Constants.BottomNavigation,
                 "addOnDestinationChangedListener: $it"
-            )*/
+            )
 //            bottomBarState.value = !it.contains("meal_detail")
+            bottomBarState.value = !(it.contains("login") || it.contains("order_list"))
             shahenCurrentScreen = it
         }
     }
@@ -117,13 +118,9 @@ fun ShahenBottomNavigation() {
         }
     ) { it ->
         NavigationController(
-            startDestination = if(preferenceManager.isLogin()) DASHBOARD_ROUTE else LOGIN_ROUTE,
+            startDestination = if (preferenceManager.isLogin()) DASHBOARD_ROUTE else LOGIN_ROUTE,
             navController = navController,
             it,
-            hideBottomNav = bottomBarState.value,
-            hideBottomNavEvent = {
-                bottomBarState.value = it
-                Log.d(Constants.BottomNavigation, "Navigation: $it")
-            })
+        )
     }
 }

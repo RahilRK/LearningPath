@@ -27,6 +27,7 @@ import com.shahen.provider.core.models.responses.login.User
 @Preview(showSystemUi = true)
 @Composable
 fun Header(
+    modifier: Modifier = Modifier,
     user: User = User(),
     unreadNotification: Double = 0.0,
     context: Context = LocalContext.current,
@@ -38,7 +39,7 @@ fun Header(
 
     
 
-    Column {
+    Column(modifier = modifier) {
         Box(modifier = Modifier.fillMaxWidth()) {
 
             Row(modifier = Modifier.align(Alignment.CenterStart)) {

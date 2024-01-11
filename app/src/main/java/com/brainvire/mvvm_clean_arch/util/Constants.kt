@@ -40,6 +40,33 @@ object Constants {
     const val PASSWORD_MAX_LENGTH = 30
     const val PASSWORD_MIN_LENGTH = 8
 
+    //todo shahen variable
+    const val PREF_NAME = "shaheen_provider"
+    const val SERVER_DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss"
+    const val SERVER_DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss"
+    const val SERVER_DATE_TIME_FORMAT_CHAT = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSZ"
+    const val DATE_FORMAT_YEAR = "dd/MM/yy"
+    const val DATE_FORMAT_YEAR_THREE = "yyy-mm-dd"
+    const val LOCAL_DATE_FORMAT = "dd/MM/yy"
+    const val LOCAL_DATE_FORMAT_TWO = "dd/MM/yyyy"
+    const val SEND_DATE_FORMAT = "dd/MM/yyyy"
+    const val SERVER_DATE_FORMAT_TWO = "yyyy-MM-dd"
+    const val SERVER_DATE_NOTIFICATION_FORMAT = "HH:mm"
+    const val USER_NOTIFICATION_FORMAT = "hh:mm a"
+    const val ORDER_DATE_FORMAT = "d MMM yyyy"
+    const val TIMEZONE_FORMAT = "ZZZZZ"
+
+    //todo order type
+    const val SECTION_DIRECT_ORDER = "order"
+    const val SECTION_SPECIAL_ORDER = "special_order"
+    const val SECTION_CONTRACT = "membership"
+    const val SECTION_CONTRACT_DASHBOARD = "membership_history"
+    const val SECTION_PRICES = "prices"
+    const val SECTION_DRIVER = "driver"
+    const val SECTION_ADDITIONAL_DRIVER = "additional_driver"
+    const val SECTION_TRUCK = "truck"
+    const val SECTION_ORDER_HISTORY = "all"
+
     //todo shahen navigation screen key
     const val LOGIN_ROUTE = "login"
     const val DASHBOARD_ROUTE = "dashboard"

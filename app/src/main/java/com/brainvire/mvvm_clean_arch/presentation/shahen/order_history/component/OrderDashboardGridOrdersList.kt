@@ -14,12 +14,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.brainvire.mvvm_clean_arch.data.model.response.direct_order.dashboard.Data
 import com.brainvire.mvvm_clean_arch.presentation.shahen.component.LoadingDialog
 import com.brainvire.mvvm_clean_arch.presentation.shahen.order_history.OrderHistoryViewModel
 import com.brainvire.mvvm_clean_arch.presentation.shahen.order_history.state.OrderHistoryState
 
 @Composable
-fun OrderDashboardGridOrdersList(viewModel: OrderHistoryViewModel = hiltViewModel()) {
+fun OrderDashboardGridOrdersList(
+    viewModel: OrderHistoryViewModel = hiltViewModel(),
+    onItemClick: (index: Int, model: Data) -> Unit = { pos: Int, mModel: Data -> }
+) {
 
     val TAG = "OrderDashboardGridOrdersList"
 
@@ -47,7 +51,9 @@ fun OrderDashboardGridOrdersList(viewModel: OrderHistoryViewModel = hiltViewMode
                 itemsIndexed(result.list.toList()) { index, model ->
 
                     OrderDashboardItem(
+                        pos = index,
                         model = model,
+                        onItemClick = onItemClick
                     )
                 }
             }

@@ -1,4 +1,4 @@
-package com.brainvire.mvvm_clean_arch.presentation.shahen.dashboard.component
+package com.brainvire.mvvm_clean_arch.presentation.shahen.order_list.component
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.brainvire.learning.R
 import com.brainvire.mvvm_clean_arch.common.toSafeInt
-import com.brainvire.mvvm_clean_arch.data.model.response.dashboard.CurrentOrder
+import com.brainvire.mvvm_clean_arch.data.model.response.order_history.RespOrderHistoryList
 import com.brainvire.mvvm_clean_arch.presentation.shahen.component.DashedDivider
 import com.brainvire.mvvm_clean_arch.presentation.shahen.ui.theme.brown
 import com.brainvire.mvvm_clean_arch.presentation.shahen.ui.theme.from_to_color
@@ -37,15 +37,15 @@ import com.brainvire.mvvm_clean_arch.util.DateUtils
 
 @Preview(showSystemUi = false)
 @Composable
-fun DashboardCurrentOrderListItem(
-    model: CurrentOrder = CurrentOrder(
+fun OrderHistoryListItem(
+    model: RespOrderHistoryList.Data = RespOrderHistoryList.Data(
         id = 453434222,
         section = "order",
         price = 2000,
         quantity = 3,
         weight = "5",
         createdAt = "23 May 2023",
-        offloadingDate = "29 May 2023"
+        offloadingDate = "29 May 2023",
     ),
 //    onItemClick: (model: DashboardOrders) -> Unit = {}
 ) {
@@ -58,10 +58,46 @@ fun DashboardCurrentOrderListItem(
         shape = RoundedCornerShape(16.dp),
     ) {
         Column {
+
+            when (model.section) {
+                Constants.SECTION_DIRECT_ORDER -> {
+                    Text(
+                        modifier = Modifier
+                            .padding(start = 16.dp, end = 16.dp, top = 8.dp),
+                        text = "Direct Orders",
+                        color = brown,
+                        fontSize = 12.sp,
+                        fontWeight = FontWeight.SemiBold
+                    )
+                }
+
+                Constants.SECTION_CONTRACT -> {
+                    Text(
+                        modifier = Modifier
+                            .padding(start = 16.dp, end = 16.dp, top = 8.dp),
+                        text = "Contracts",
+                        color = brown,
+                        fontSize = 12.sp,
+                        fontWeight = FontWeight.SemiBold
+                    )
+                }
+
+                Constants.SECTION_SPECIAL_ORDER -> {
+                    Text(
+                        modifier = Modifier
+                            .padding(start = 16.dp, end = 16.dp, top = 8.dp),
+                        text = "Special Orders",
+                        color = brown,
+                        fontSize = 12.sp,
+                        fontWeight = FontWeight.SemiBold
+                    )
+
+                }
+            }
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(start = 16.dp, end = 16.dp, top = 8.dp)
+                    .padding(start = 16.dp, end = 16.dp, top = 2.dp)
                     .background(Color.White)
             ) {
 
@@ -120,7 +156,7 @@ fun DashboardCurrentOrderListItem(
                         )
 
                         Text(
-                            text = model.goodsType?.name?: "Liquid",
+                            text = model.goodsType?.name ?: "Liquid",
                             color = text_color,
                             fontSize = 12.sp,
                             fontWeight = FontWeight.SemiBold
@@ -134,40 +170,49 @@ fun DashboardCurrentOrderListItem(
                         .fillMaxWidth(), horizontalAlignment = Alignment.End
                 ) {
                     Text(
-                        text = "Order Type",
+                        text = "Requester",
                         color = text_color_light,
                         fontSize = 12.sp,
                         fontWeight = FontWeight.Normal,
                     )
 
-                    when (model.section) {
-                        Constants.SECTION_DIRECT_ORDER -> {
-                            Text(
-                                text = "Direct Orders",
-                                color = brown,
-                                fontSize = 12.sp,
-                                fontWeight = FontWeight.SemiBold
-                            )
-                        }
+                    Text(
+                        text = model.requester?.name ?: "XYZ",
+                        color = text_color,
+                        fontSize = 12.sp,
+                        fontWeight = FontWeight.SemiBold
+                    )
 
-                        Constants.SECTION_CONTRACT -> {
-                            Text(
-                                text = "Contracts",
-                                color = brown,
-                                fontSize = 12.sp,
-                                fontWeight = FontWeight.SemiBold
-                            )
-                        }
+                    /*
+                                        when (model.section) {
+                                            Constants.SECTION_DIRECT_ORDER -> {
+                                                Text(
+                                                    text = "Direct Orders",
+                                                    color = brown,
+                                                    fontSize = 12.sp,
+                                                    fontWeight = FontWeight.SemiBold
+                                                )
+                                            }
 
-                        Constants.SECTION_SPECIAL_ORDER -> {
-                            Text(
-                                text = "Special Orders",
-                                color = brown,
-                                fontSize = 12.sp,
-                                fontWeight = FontWeight.SemiBold
-                            )
-                        }
-                    }
+                                            Constants.SECTION_CONTRACT -> {
+                                                Text(
+                                                    text = "Contracts",
+                                                    color = text_color,
+                                                    fontSize = 12.sp,
+                                                    fontWeight = FontWeight.SemiBold
+                                                )
+                                            }
+
+                                            Constants.SECTION_SPECIAL_ORDER -> {
+                                                Text(
+                                                    text = "Special Orders",
+                                                    color = brown,
+                                                    fontSize = 12.sp,
+                                                    fontWeight = FontWeight.SemiBold
+                                                )
+                                            }
+                                        }
+                    */
                 }
 
             }

@@ -28,4 +28,5 @@ object URLFactory {
     const val UNREAD_NOTIFICATION = "/api/notifications/unread"
     const val EP_DIRECT_ORDER_DASHBOARD = "provider/order/history/count"
     const val EP_DASHBOARD_DATA = "provider/dashboard"
+    const val EP_ORDER_HISTORY_LIST = "provider/order/history"
 }
