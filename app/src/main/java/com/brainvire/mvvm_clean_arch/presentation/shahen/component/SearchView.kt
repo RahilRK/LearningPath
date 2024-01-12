@@ -3,6 +3,7 @@ package com.brainvire.mvvm_clean_arch.presentation.shahen.component
 import android.content.Context
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredHeight
@@ -41,7 +42,8 @@ fun SearchView(
         modifier = Modifier
             .requiredHeight(50.dp)
             .fillMaxWidth()
-            .background(shape = RoundedCornerShape(8.dp), color = search_view_bg),
+            .padding(0.dp)
+            .background(shape = RoundedCornerShape(12.dp), color = search_view_bg),
         placeholder = {
             Text(text = "Search", color = text_color, fontSize = 14.sp)
         },
@@ -55,7 +57,8 @@ fun SearchView(
         ),
         singleLine = true,
         leadingIcon = {
-            IconButton(onClick = { /*TODO*/ }) {
+            IconButton(onClick = {
+            }) {
                 Icon(
                     modifier = Modifier.size(16.dp),
                     imageVector = ImageVector.vectorResource(id = R.drawable.ic_search),

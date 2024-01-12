@@ -15,7 +15,7 @@ import com.brainvire.mvvm_clean_arch.presentation.shahen.more.component.MoreOpti
 
 @Preview(showSystemUi = true)
 @Composable
-fun More() {
+fun More(logoutClick: () -> Unit = {}) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -35,7 +35,7 @@ fun More() {
                 showChangeLanguageBtn = true
             )
 
-            MoreOptionCard(modifier = Modifier.padding(top = 16.dp))
+            MoreOptionCard(modifier = Modifier.padding(top = 16.dp), logoutClick = logoutClick)
         }
     }
 }

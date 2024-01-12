@@ -1,6 +1,6 @@
 package com.brainvire.mvvm_clean_arch.presentation.shahen.login
 
-import android.util.Log
+import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -49,21 +49,24 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
 import com.brainvire.learning.R
-import com.brainvire.mvvm_clean_arch.common.toSafeInt
 import com.brainvire.mvvm_clean_arch.presentation.shahen.component.LoadingDialog
+import com.brainvire.mvvm_clean_arch.presentation.shahen.component.SnakeBar
 import com.brainvire.mvvm_clean_arch.presentation.shahen.ui.theme.edt_border_color
 import com.brainvire.mvvm_clean_arch.presentation.shahen.ui.theme.shahen_app_color
 
 @OptIn(ExperimentalMaterialApi::class)
 @Preview
 @Composable
-fun Login() {
+fun Login(
+    context: Context = LocalContext.current,
+    navController: NavHostController = NavHostController(context)
+) {
 
     val TAG = "Login"
 
     val viewModel: LoginViewModel = hiltViewModel()
-    val preferenceManager = viewModel.preferenceManager
     val context = LocalContext.current
     val scaffoldState: ScaffoldState = rememberScaffoldState()
 
@@ -71,22 +74,11 @@ fun Login() {
     val emailState = viewModel.emailState.value
     val passwordState = viewModel.passwordState.value
     val showPasswordState = viewModel.showPasswordState.collectAsState().value
-    val loginState = viewModel.loginState.collectAsState().value
+    val loginErrorMsg = viewModel.loginErrorMsg.collectAsState().value
 
-    if(loginState.isLoading) {
-        Log.d(TAG, "loginState: isLoading:")
-    }
-    else if (loginState.error.isNotEmpty()) {
-        Log.e(TAG, "loginState: error: ${loginState.error}")
-//        SnakeBar(scaffoldState = scaffoldState, message = loginState.error)
-    } else {
-        Log.d(TAG, "loginState: success: ${loginState.data}")
-        val loginResponse = loginState.data?.data
-        preferenceManager.setLogin(true)
-        preferenceManager.setUserId(loginResponse?.user?.id.toSafeInt())
-        preferenceManager.setProviderId(loginResponse?.user?.serviceProvider?.id.toSafeInt())
-        preferenceManager.setAccessToken(loginResponse?.accessToken.orEmpty())
-        preferenceManager.setDeviceToken(loginResponse?.user?.deviceToken.orEmpty())
+    //todo show login error message Snake-bar
+    if(loginErrorMsg != "") {
+        SnakeBar(scaffoldState = scaffoldState, message = loginErrorMsg, viewModel)
     }
 
     Scaffold(scaffoldState = scaffoldState) {
@@ -323,8 +315,7 @@ fun Login() {
                                 contentColor = Color.White
                             ),
                             onClick = {
-                                viewModel.isValid()
-
+                                viewModel.isValid(navController = navController)
                             },
                         ) {
                             Text(
