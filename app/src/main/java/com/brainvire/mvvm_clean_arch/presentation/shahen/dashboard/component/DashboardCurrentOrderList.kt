@@ -23,6 +23,6 @@ fun DashboardCurrentOrderList(
                 model
             )
         }
-    }, modifier = Modifier, state = mealLazyListState)
+    }, modifier = Modifier, state = mealLazyListState, userScrollEnabled = false)
 
 }

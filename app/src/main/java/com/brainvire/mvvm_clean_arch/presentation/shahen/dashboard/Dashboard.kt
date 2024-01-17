@@ -5,6 +5,7 @@ import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -102,6 +103,7 @@ fun Dashboard() {
 
             Column(
                 modifier = Modifier
+                    .fillMaxSize()
                     .padding(8.dp)
             ) {
                 DashboardGridOrdersList()

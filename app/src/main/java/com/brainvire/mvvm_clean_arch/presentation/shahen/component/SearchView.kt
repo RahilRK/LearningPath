@@ -69,7 +69,6 @@ fun SearchView(
         },
         colors = TextFieldDefaults.textFieldColors(
             backgroundColor = Color.Transparent,
-            cursorColor = Color.White,
             focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent,
             disabledIndicatorColor = Color.Transparent,
