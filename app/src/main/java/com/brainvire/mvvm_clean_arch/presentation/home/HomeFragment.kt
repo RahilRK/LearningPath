@@ -7,9 +7,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
+import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.brainvire.learning.databinding.FragmentHomeBinding
+import com.brainvire.mvvm_clean_arch.presentation.LoginScreen
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -27,6 +31,17 @@ class HomeFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentHomeBinding.inflate(layoutInflater, container, false)
         viewModel = ViewModelProvider(this)[HomeViewModel::class.java]
+        binding.composeView.apply {
+            // Dispose of the Composition when the view's LifecycleOwner
+            // is destroyed
+            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+            setContent {
+                // In Compose world
+                MaterialTheme {
+                    LoginScreen()
+                }
+            }
+        }
 
 
         collectCategoryData()
@@ -49,5 +64,4 @@ class HomeFragment : Fragment() {
             }
         }
     }
-
 }

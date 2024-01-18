@@ -27,7 +27,7 @@ class HomeViewModel @Inject constructor(
     }
 
     //todo meal
-    fun getCategoryList() {
+    private fun getCategoryList() {
         categoryUseCase.invoke().onEach { result ->
             when (result) {
                 is ResponseHandler.Success -> {

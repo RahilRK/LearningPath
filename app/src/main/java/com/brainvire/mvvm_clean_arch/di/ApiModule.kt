@@ -21,6 +21,7 @@ import com.brainvire.mvvm_clean_arch.domain.repository.MyProfileRepository
 import com.brainvire.mvvm_clean_arch.domain.repository.NotificationRepository
 import com.brainvire.mvvm_clean_arch.domain.repository.OrderHistoryRepository
 import com.brainvire.mvvm_clean_arch.domain.repository.Repository
+import com.brainvire.mvvm_clean_arch.util.Constants.BASE_URL
 import com.brainvire.mvvm_clean_arch.util.URLFactory
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -40,15 +41,15 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object ApiModule {
 
-    /*
+/*
         @Provides
         @Singleton
         fun provideLoggingInterceptor(): HttpLoggingInterceptor{
             return HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
         }
-    */
+*/
 
-    /*
+/*
         @Provides
         @Singleton
         fun provideOkHttpClient(): OkHttpClient{
@@ -64,9 +65,9 @@ object ApiModule {
 
             return builder.build()
         }
-    */
+*/
 
-    /*
+/*
         @Provides
         @Singleton
         fun provideRetrofit(client: OkHttpClient): Retrofit {
@@ -76,7 +77,7 @@ object ApiModule {
                 .client(client)
                 .build()
         }
-    */
+*/
 
     @Singleton
     @Provides
@@ -136,7 +137,8 @@ object ApiModule {
     @Provides
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
-            .baseUrl(URLFactory.provideHttpUrl())
+//            .baseUrl(URLFactory.provideHttpUrl()) //todo Shahen Base Url
+            .baseUrl(BASE_URL)//todo Recipe Base Url
             .addConverterFactory(GsonConverterFactory.create())
             .client(okHttpClient)
             .build()
