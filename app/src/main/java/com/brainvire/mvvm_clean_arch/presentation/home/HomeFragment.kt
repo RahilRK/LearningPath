@@ -2,18 +2,22 @@ package com.brainvire.mvvm_clean_arch.presentation.home
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ViewCompositionStrategy
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.brainvire.learning.databinding.FragmentHomeBinding
-import com.brainvire.mvvm_clean_arch.presentation.LoginScreen
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -38,13 +42,20 @@ class HomeFragment : Fragment() {
             setContent {
                 // In Compose world
                 MaterialTheme {
-                    LoginScreen()
+                    Column(modifier = Modifier.fillMaxSize()) {
+                        Text(text = "Compose Text View")
+                        Button(onClick = {
+                            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToWholeComposeFragment())
+                        }) {
+                            Text(text = "Next Screen")
+                        }
+                    }
                 }
             }
         }
 
 
-        collectCategoryData()
+//        collectCategoryData()
 
         return binding.root
     }

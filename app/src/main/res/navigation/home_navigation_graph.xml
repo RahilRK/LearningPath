@@ -9,5 +9,13 @@
         android:id="@+id/homeFragment"
         android:name="com.brainvire.mvvm_clean_arch.presentation.home.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_homeFragment_to_wholeComposeFragment"
+            app:destination="@id/wholeComposeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/wholeComposeFragment"
+        android:name="com.brainvire.mvvm_clean_arch.presentation.learning_compose.WholeComposeFragment"
+        android:label="fragment_whole_compose" />
 </navigation>
