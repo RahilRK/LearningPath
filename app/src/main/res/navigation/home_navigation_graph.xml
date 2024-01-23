@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/home_navigation_graph"
-    app:startDestination="@id/homeFragment">
+    app:startDestination="@id/paginationFragment">
 
     <fragment
         android:id="@+id/homeFragment"
@@ -18,4 +18,9 @@
         android:id="@+id/wholeComposeFragment"
         android:name="com.brainvire.mvvm_clean_arch.presentation.learning_compose.WholeComposeFragment"
         android:label="fragment_whole_compose" />
+    <fragment
+        android:id="@+id/paginationFragment"
+        android:name="com.brainvire.mvvm_clean_arch.presentation.pagination.PaginationFragment"
+        android:label="fragment_pagination"
+        tools:layout="@layout/fragment_pagination" />
 </navigation>

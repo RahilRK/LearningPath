@@ -7,6 +7,7 @@ import com.brainvire.mvvm_clean_arch.data.model.request.ReqOrderHistoryList
 import com.brainvire.mvvm_clean_arch.data.model.response.AppResponse
 import com.brainvire.mvvm_clean_arch.data.model.response.dashboard.MainDashboardResponse
 import com.brainvire.mvvm_clean_arch.data.model.response.direct_order.dashboard.Data
+import com.brainvire.mvvm_clean_arch.data.model.response.food2fork.RespFood2Fork
 import com.brainvire.mvvm_clean_arch.data.model.response.my_profile.RespMyProfile
 import com.brainvire.mvvm_clean_arch.data.model.response.order_history.RespOrderHistoryList
 import com.brainvire.mvvm_clean_arch.util.URLFactory.EP_DASHBOARD_DATA
@@ -20,6 +21,8 @@ import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface ApiInterface {
 
@@ -78,4 +81,11 @@ interface ApiInterface {
 
     @POST(EP_ORDER_HISTORY_LIST)
     suspend fun orderHistoryList(@Body model: ReqOrderHistoryList): AppResponse<RespOrderHistoryList>
+
+    /*todo food2fork*/
+    @GET("api/recipe/search/?")
+    suspend fun getFoodList(
+        @Query("page") page: Int = 1,
+        @Query("query") query: String = ""
+    ): Response<RespFood2Fork>
 }

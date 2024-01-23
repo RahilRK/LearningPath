@@ -6,7 +6,8 @@ object Constants {
     const val ADD_NOTE_SCREEN = "AddNoteScreen"
     const val UPDATE_NOTE_SCREEN = "UpdateNoteScreen"
 
-    const val BASE_URL = "https://www.themealdb.com/"
+//    const val BASE_URL = "https://www.themealdb.com/"
+    const val BASE_URL = "https://food2fork.ca/"
 //    const val BASE_URL = "https://shahennew.demo.brainvire.dev/api/"
 
     const val HOME_SCREEN_TAG = "HomeScreen"

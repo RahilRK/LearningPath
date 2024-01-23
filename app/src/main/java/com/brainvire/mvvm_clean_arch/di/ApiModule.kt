@@ -41,43 +41,43 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object ApiModule {
 
-/*
-        @Provides
-        @Singleton
-        fun provideLoggingInterceptor(): HttpLoggingInterceptor{
-            return HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
-        }
-*/
+    /*
+            @Provides
+            @Singleton
+            fun provideLoggingInterceptor(): HttpLoggingInterceptor{
+                return HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
+            }
+    */
 
-/*
-        @Provides
-        @Singleton
-        fun provideOkHttpClient(): OkHttpClient{
-            val logging = HttpLoggingInterceptor()
-            logging.level = HttpLoggingInterceptor.Level.BODY
+    /*
+            @Provides
+            @Singleton
+            fun provideOkHttpClient(): OkHttpClient{
+                val logging = HttpLoggingInterceptor()
+                logging.level = HttpLoggingInterceptor.Level.BODY
 
-            val builder = OkHttpClient.Builder()
-            builder.addInterceptor(logging)
-            builder.readTimeout(60, TimeUnit.SECONDS)
-                .connectTimeout(60, TimeUnit.SECONDS)
-                .addInterceptor(logging)
-                .build()
+                val builder = OkHttpClient.Builder()
+                builder.addInterceptor(logging)
+                builder.readTimeout(60, TimeUnit.SECONDS)
+                    .connectTimeout(60, TimeUnit.SECONDS)
+                    .addInterceptor(logging)
+                    .build()
 
-            return builder.build()
-        }
-*/
+                return builder.build()
+            }
+    */
 
-/*
-        @Provides
-        @Singleton
-        fun provideRetrofit(client: OkHttpClient): Retrofit {
-            return Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .client(client)
-                .build()
-        }
-*/
+    /*
+            @Provides
+            @Singleton
+            fun provideRetrofit(client: OkHttpClient): Retrofit {
+                return Retrofit.Builder()
+                    .baseUrl(BASE_URL)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .client(client)
+                    .build()
+            }
+    */
 
     @Singleton
     @Provides
@@ -115,14 +115,19 @@ object ApiModule {
             Interceptor { chain ->
                 val original = chain.request()
                 val builder = original.newBuilder().method(original.method, original.body)
-                builder.header("device-name", Build.MODEL)
+
+                /*todo shahen header*/
+                /*builder.header("device-name", Build.MODEL)
                 builder.header("device-os", "Android")
                 builder.header("device-os-version", Build.VERSION.RELEASE)
                 builder.header("lang", preferenceManager.getLanguage())
                 builder.header("Accept", "application/json")
                 if (preferenceManager.isLogin()) {
                     builder.header("Authorization", "Bearer " + preferenceManager.getAccessToken())
-                }
+                }*/
+
+                /*todo food2fork header*/
+                builder.header("Authorization", "Token 9c8b06d329136da358c2d00e76946b0111ce2c48")
                 chain.proceed(builder.build())
             }
         )
@@ -138,7 +143,7 @@ object ApiModule {
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
 //            .baseUrl(URLFactory.provideHttpUrl()) //todo Shahen Base Url
-            .baseUrl(BASE_URL)//todo Recipe Base Url
+            .baseUrl(BASE_URL)//todo Recipe or Food2Fork Base Url
             .addConverterFactory(GsonConverterFactory.create())
             .client(okHttpClient)
             .build()
@@ -151,8 +156,10 @@ object ApiModule {
     }
 
     @Provides
-    fun provideDomainRepository(apiInterface: ApiInterface): Repository {
-        return RepositoryImpl(apiInterface)
+    fun provideDomainRepository(
+        apiInterface: ApiInterface, gson: Gson
+    ): Repository {
+        return RepositoryImpl(apiInterface, gson)
     }
 
     @Singleton
@@ -202,6 +209,7 @@ object ApiModule {
     ): DirectOrderRepository {
         return DirectOrderRepImplement(apiInterface, preferenceManager, gson)
     }
+
     @Provides
     fun provideDashboardRepository(
         apiInterface: ApiInterface,
@@ -210,6 +218,7 @@ object ApiModule {
     ): DashboardRepository {
         return MainDashboardRepImpl(apiInterface, preferenceManager, gson)
     }
+
     @Provides
     fun provideOrderHistoryListRepository(
         apiInterface: ApiInterface,
