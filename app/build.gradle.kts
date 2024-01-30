@@ -122,4 +122,6 @@ dependencies {
     implementation("io.coil-kt:coil-compose:2.4.0")
 
     implementation ("com.google.accompanist:accompanist-flowlayout:0.23.1")
+
+    debugImplementation("com.squareup.leakcanary:leakcanary-android:2.4")
 }
